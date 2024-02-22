@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"
+		xmlns:th= "http://www.thymeleaf.org"
+		xmlns:sec= "http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+		xmlns:layout= "http://www.ultraq.net.nz/thymeleaf/layout"
+>
+	<head>
+		<meta charset="utf-8">
+		<title>Self-acceptance</title>
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<link rel="stylesheet" type="text/css" th:href="@{'/css/style.css'}" media="all">
+	</head>
+	<body>
+
+		<div class="wrapper">
+			<div class="header">
+				<div class="headerContent">
+					<div class="left"><h1><a href="#">self-acceptance</a></h1><p>If your compassion does not include yourself, it is incomplete.</p></div>
+					<div class="right">
+						<form class="search">
+							<input type="text" placeholder="Search...">
+							<img width="40px" th:src="@{'/images/search.jpg'}" title="Search">
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="slider">
+				<div class="itemSlider">
+					<div class="bgSlide">
+						<img height="300px" width="1000px" src="https://sepatms.com/wp-content/uploads/2021/11/AdobeStock_403085949.jpeg" ></div>
+					<div class="descSlide">
+						<h1></h1>
+						<p></p>
+						<span></span>
+						<p></p>
+					</div>
+				</div>
+			</div>
+			<div class="nav">
+				<ul class="menu">
+
+
+					<li><a th:href="@{'/index'}">Home</a></li>
+					<li><a href="#">Psychologists</a></li>
+					<li><a href="#">Articles on psychology</a></li>
+					<li><a href="#">Online tests</a></li>
+					<li><a href="#">Questions to specialists</a></li>
+					<li><a href="#">Themes</a></li>
+					<li><a  sec:authorize="isAuthenticated()" class="dropdown-item" href="JavaScript:void(0)" onclick="logout()">Logout</a></li>
+					<form th:action="@{'/logout'}" method="post" id="logoutForm">
+
+					</form>
+
+					<script type="text/javascript">
+
+
+
+						function logout(){
+							document.getElementById("logoutForm").submit();
+						}
+					</script>
+				</ul>
+			</div>
+
+			<div class="col-12" layout:fragment="loginRegistrtion">
+
+
+
+
+			</div>
+
+
+
+
+
+			<div class="main">
+
+				<div class="leftCol">
+
+					<div class="col-12" layout:fragment="login">
+
+
+
+					</div>
+
+					<div class="col-12" layout:fragment="registration">
+
+
+
+					</div>
+
+
+									<div sec:authorize = "hasAnyRole('ROLE_ADMIN')">
+										<a th:href="@{'/#'}">ADMIN PANEL</a>
+									</div>
+									<div sec:authorize = "hasAnyRole('ROLE_PSYCHOLOGIST')">
+										<a th:href="@{'/#'}">PSYCHOLOGIST PANEL</a>
+									</div>
+
+					<div class="row">
+						<p style="font-size: 15px"><a href="#">About us</a></p>
+					</div>
+
+				</div>
+
+
+
+
+
+				<div class="col-12" layout:fragment="mainInformation">
+
+				</div>
+
+				<div class="col-12" layout:fragment="profile">
+
+				</div>
+
+				</div>
+
+
+
+
+
+
+
+
+
+			<div class="footer">
+				<div class="footerContent">
+					<div class="span1">
+						<h1>Sed ut</h1>
+						<div class="borderBottom"></div>
+						<p>Lorem ipsum dolor sit</p>
+						<ul class="clock">
+							<li>Nights! Absolutely No Extra Charge</li>
+							<li>Weekends! Absolutely No Extra Charge</li>
+							<li>Holidays! Absolutely No Extra Charge</li>
+						</ul>
+						<div class="social">
+							<div>Мы в социальных сетях: </div><ul><li><a target="newtab" href="http://www.facebook.com/?sk=app_2309869772"><img src="../static/images/facebook.png"></a></li><li><a target="newtab" href="https://twitter.com/psdhtmlcss"><img src="../static/images/twitter.png" /></a></li><li><img src="../static/images/vk.png" /></li></ul>
+						</div>
+					</div>
+					<div class="span1">
+						<h1>At vero eos</h1>
+						<div class="borderBottom"></div>
+						<p>Lorem ipsum dolor sit</p>
+						<ul>
+							<li>West Hollywood (323) 221-1107</li>
+							<li>Beverly Hills (310) 202-5428</li>
+							<li>Pasadena (626) 296-2664</li>
+							<li>West Hollywood (323) 221-1107</li>
+							<li>Beverly Hills (310) 202-5428</li>
+						</ul>
+						<p><strong>Lorem ipsum dolor sit amet</strong></p>
+					</div>
+					<div class="span1">
+						<h1>Lorem ipsum dolor</h1>
+						<div class="borderBottom"></div>
+						<p>Lorem ipsum dolor sit</p>
+						<ul class="unstyled">
+							<li>Hi-Tech Cherry Company</li>
+							<li><a href="mailto:psdhtmlcss@mail.ru">infocherry@gmail.com</a></li>
+							<li>5104 W. Washington Blvd</li>
+							<li>Los Angeles , CA , 90016 United States</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</body>
+</html>

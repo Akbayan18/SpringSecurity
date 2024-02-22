@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="main_lay.html">
+
+
+<div layout:fragment="cour">
+  <div class="card">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">Courses</h3>
+      <a th:href="@{'/settings'}" class="btn btn-primary">Details</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">Roles</h3>
+      <a th:href="@{'/rolee'}" class="btn btn-primary">Details</a>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">Categories</h3>
+      <a th:href="@{'/categorry'}" class="btn btn-primary">Details</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">Users</h3>
+      <a th:href="@{'/userss'}" class="btn btn-primary">Details</a>
+    </div>
+  </div>
+
+
+
+  </div>
+
+</div>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="main_lay.html">
+
+
+<div layout:fragment="courses">
+  <div class="row">
+    <div class="col-12">
+      <div class="row" id="courseContent">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="editCourseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+
+                <input type="hidden" class="form-control" id="mId">
+
+
+          <div class="row">
+            <div class="col-12">
+              <div>
+                <label>Name:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <input type="text" class="form-control" id="mName">
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div>
+                <label>Description:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <input type="text" class="form-control" id="mDescription">
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div>
+                <label>Price:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <input type="number" class="form-control" id="mPrice">
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div>
+                <label >Rating:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <input type="number" class="form-control" id="mRating">
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div>
+                <label>Author:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <select id="editCourseAuthor">
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div>
+                <label>Category:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <select id="editCourseCategory">
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="saveCourse()" >Save</button>
+          <button type="button" class="btn btn-danger" onclick="deleteCourse()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="row" id="course">
+        <button class="btn btn-light" href="JavaScript:void(0)" onclick="openAddModal()">Add</button>
+      </div>
+    </div>
+  </div>
+
+
+
+      <div class="modal fade" id="addCourseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+           aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel1">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="courseId">
+      <div class="row">
+        <div class="col-12">
+          <div>
+            <label>Name:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div>
+            <input type="text" class="form-control" id="namee">
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12">
+          <div>
+            <label>Description:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div>
+            <input type="text" class="form-control" id="description">
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12">
+          <div>
+            <label>Price:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div>
+            <input type="number" class="form-control" id="price">
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12">
+          <div>
+            <label >Rating:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div>
+              <input type="number" class="form-control" id="rating">
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12">
+          <div>
+            <label>Author:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div>
+            <select id="courseAuthor">
+
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12">
+          <div>
+            <label>Category:</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-12">
+          <div>
+            <select id="courseCategory">
+
+            </select>
+          </div>
+        </div>
+      </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="addCourses()">ADD</button>
+            </div>
+
+          </div>
+        </div>
+    </div>
+
+
+
+
+
+
+  <script>
+
+    loadCourses();
+    loadAuthors();
+    loadCategories();
+
+    var modal=new bootstrap.Modal(document.getElementById('editCourseModal'));
+    var addModal = new bootstrap.Modal(document.getElementById('addCourseModal'));
+
+
+    function loadCourses() {
+      const request = new XMLHttpRequest();
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText);
+        courseContentHTML="";
+
+        for (i = 0; i < result.length; i++) {
+          courseContentHTML+="<div class='col-3'>";
+          courseContentHTML+="<div class = 'card mt-3'>";
+          courseContentHTML+="<h5  class = 'card-header'></h5>";
+          courseContentHTML+="<div  class = 'card-body'>";
+          courseContentHTML+="<h5 class='card-title'>"+result[i].coursesName+"</h5>";
+          courseContentHTML+="<p class='card-text'>Profile: "
+                  + result[i].description + ", "
+                  +result[i].price  + " "+ result[i].author.id    +"</p>";
+          courseContentHTML+="<a href='JavaScript:void(0)' class='btn btn-primary btn-sm' onclick='openEditModal("+result[i].id+")'>Details</a>";
+          courseContentHTML+=" </div>";
+          courseContentHTML+=" </div>";
+          courseContentHTML+=" </div>";
+        }
+        courseContent.innerHTML=courseContentHTML;
+      };
+      request.open("GET", "/course");
+      request.send();
+    }
+
+
+
+    function openEditModal(id){
+      const request = new XMLHttpRequest();
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText);
+        mId.value=result.id;
+        mName.value=result.coursesName;
+        mDescription.value=result.description;
+        mPrice.value=result.price;
+        mRating.value=result.rating;
+      };
+      request.open("GET", "/course/"+id);
+      request.send()
+      modal.show();
+    }
+
+    function openAddModal() {
+      addModal.show();
+    }
+
+    function addCourses(){
+      const request=new XMLHttpRequest();
+      request.open("POST", '/course', true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onreadystatechange= () => {
+        if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+          loadCourses();
+        }
+      }
+      request.send(
+              JSON.stringify(
+                      {
+                        "coursesName": namee.value,
+                        "description": description.value,
+                        "price": price.value,
+                        "rating": rating.value,
+                        "author": {
+                          "id": courseAuthor.value
+                        },
+                        "category": {
+                          "id": courseCategory.value
+                        }
+                      }
+              )
+      );
+      addModal.hide();
+    }
+
+    function saveCourse(){
+      const request=new XMLHttpRequest();
+      request.open("PUT", '/course', true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onreadystatechange= () => {
+        if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+          loadCourses();
+          loadAuthors();
+          loadCategories();
+        }
+      }
+      request.send(
+              JSON.stringify(
+                      {
+                        "id": mId.value,
+                        "coursesName": mName.value,
+                        "description": mDescription.value,
+                        "price": mPrice.value,
+                        "rating": mRating.value,
+                        "author": {
+                          "id": editCourseAuthor.value
+                        },
+                        "category": {
+                          "id": editCourseCategory.value
+                        }
+                      }
+              )
+      );
+      modal.hide();
+    }
+
+
+
+
+    function deleteCourse(){
+      var conf=confirm("Are you sure?");
+      if (conf){
+        const request=new XMLHttpRequest();
+        request.open("DELETE", '/course/'+mId.value, true);
+
+        request.onreadystatechange= () => {
+          if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+            loadCourses();
+          }
+        }
+
+        request.send();
+      }
+      modal.hide();
+    }
+
+
+
+    function loadAuthors() {
+      const request = new XMLHttpRequest(); // <form>
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText); // converts JSON to ARRAY
+        editCourseAuthorHTML = "";
+        for (i = 0; i < result.length; i++) {
+          editCourseAuthorHTML += "<option value='" + result[i].id + "'>" +
+                  result[i].fullName +
+                  "</option>"
+        }
+        editCourseAuthor.innerHTML = editCourseAuthorHTML;
+        courseAuthor.innerHTML = editCourseAuthorHTML;
+      };
+      request.open("GET", "/authoor");
+      request.send();
+    }
+
+    function loadCategories() {
+      const request = new XMLHttpRequest();
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText);
+        editCourseCategoryHTML = "";
+        for (i = 0; i < result.length; i++) {
+          editCourseCategoryHTML += "<option value='" + result[i].id + "'>" +
+                  result[i].name +
+                  "</option>"
+        }
+        editCourseCategory.innerHTML = editCourseCategoryHTML;
+        courseCategory.innerHTML = editCourseCategoryHTML;
+      };
+      request.open("GET", "/categoryy");
+      request.send();
+    }
+
+
+
+
+
+
+  </script>
+</div>
+</html>

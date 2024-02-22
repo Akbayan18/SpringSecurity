@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="main_layout.html">
+
+
+<div class="col-12" layout:fragment="loginRegistrtion">
+
+  <div sec:authorize="isAnonymous()" class="breadcrumbs"><a  style="font-size: 15px" th:href="@{'/index'}">Login</a>
+    /
+    <a id="openRegistration" style="font-size: 15px" th:href="@{'/registration'}">Registration</a></div>
+
+
+
+</div>
+
+
+<div class="col-12" layout:fragment="registration">
+
+  <form sec:authorize="isAnonymous()" th:action="@{'/register'}" method="post">
+    <h2>Let`s start!</h2>
+
+    <input type="text" name="owner_full_name" placeholder="Full name">
+    <input type="text" name="owner_email" placeholder="Email">
+    <select name="owner_gender">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+<!--    <input type="text"  placeholder="Gender">-->
+    <input type="number" name="owner_age" placeholder="Age">
+    <input type="text" name="owner_description" placeholder="Description">
+    <input type="password" name="owner_password" placeholder="Password">
+    <input type="password" name="owner_re_password" placeholder="Repeat password">
+
+    <button type="submit" class="minWidth">Sign up</button>
+  </form>
+</div>
+
+
+<div layout:fragment="mainInformation">
+
+
+
+  <div class="rightCol">
+    <h1>What We Do…</h1>
+    <p>
+
+      Knowledge of general psychology will help you solve life problems on your own. You can learn to manage yourself and your emotions, and this will allow you to regulate relationships between people. In addition, it will be possible to influence other people, to better understand the reasons for their actions.
+
+    </p>
+    <ul class="img">
+      <li><a href="#"><img width="200px" height="150px" th:src="@{'/images/img.jpg'}"  ></a></li>
+      <li><a href="#"><img width="200px" height="150px" th:src="@{'/images/img1.jpg'}" ></a></li>
+      <li><a href="#"><img width="200px" height="150px" th:src="@{'/images/img2.jpg'}" ></a></li>
+    </ul>
+
+    <h1>Statistics</h1>
+    <table>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Lorem</th>
+        <th>Ipsum</th>
+        <th>Dolor</th>
+        <th>Sit</th>
+        <th>Amet</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td>Lorem ipsum</td>
+        <td>At vero eos</td>
+        <td>Sed ut</td>
+        <td>Dolor sit amet</td>
+        <td><a href="#">Epd.</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Sed ut</td>
+        <td>Dolor sit amet</td>
+        <td>Lorem ipsum</td>
+        <td>At vero eos</td>
+        <td><a href="#">Epd.</a></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>At vero eos</td>
+        <td>Lorem ipsum</td>
+        <td>Sed ut</td>
+        <td>Dolor sit amet</td>
+        <td><a href="#">Epd.</a></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Dolor sit amet</td>
+        <td>At vero eos</td>
+        <td>Lorem ipsum</td>
+        <td>Sed ut</td>
+        <td><a href="#">Epd.</a></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>At vero eos</td>
+        <td>Lorem ipsum</td>
+        <td>Sed ut</td>
+        <td>Dolor sit amet</td>
+        <td><a href="#">Epd.</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</html>

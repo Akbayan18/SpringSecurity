@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="main_lay.html">
+
+
+<div layout:fragment="categorry">
+    <div class="row">
+        <div class="col-12">
+            <div class="row" id="categoryContent">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="editCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+
+                    <input type="hidden" class="form-control" id="sId">
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <label>Name:</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div>
+                                <input type="text" class="form-control" id="sName">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveCategory()" >Save</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteCategory()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="row" >
+                <button class="btn btn-light" href="JavaScript:void(0)" onclick="openAddModal()">Add</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="addCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel1">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <label>Name:</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div>
+                                <input type="text" class="form-control" id="namee">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="addCategory()">ADD</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script>
+
+        loadCategory();
+
+        var modal=new bootstrap.Modal(document.getElementById('editCategoryModal'));
+
+        var addModal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
+
+
+        function loadCategory() {
+            const request = new XMLHttpRequest();
+            request.onload = (e) => {
+                let result = JSON.parse(request.responseText);
+                categoryContentHTML="";
+
+                for (i = 0; i < result.length; i++) {
+                    categoryContentHTML+="<div class='col-3'>";
+                    categoryContentHTML+="<div class = 'card mt-3'>";
+                    categoryContentHTML+="<h5  class = 'card-header'></h5>";
+                    categoryContentHTML+="<div  class = 'card-body'>";
+                    categoryContentHTML+="<h5 class='card-title'>"+result[i].name+"</h5>";
+                    categoryContentHTML+="<a href='JavaScript:void(0)' class='btn btn-primary btn-sm' onclick='openEditModal("+result[i].id+")'>Details</a>";
+                    categoryContentHTML+=" </div>";
+                    categoryContentHTML+=" </div>";
+                    categoryContentHTML+=" </div>";
+                }
+                categoryContent.innerHTML=categoryContentHTML;
+            };
+            request.open("GET", "/categoryy");
+            request.send();
+        }
+
+
+
+        function openEditModal(id){
+            const request = new XMLHttpRequest();
+            request.onload = (e) => {
+                let result = JSON.parse(request.responseText);
+                sId.value=result.id;
+                sName.value=result.name;
+
+            };
+            request.open("GET", "/categoryy/"+id);
+            request.send()
+            modal.show();
+        }
+
+        function openAddModal() {
+            addModal.show();
+        }
+
+        function addCategory(){
+            const request=new XMLHttpRequest();
+            request.open("POST", '/categoryy', true);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.onreadystatechange= () => {
+                if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+                    loadCategory();
+                }
+            }
+            request.send(
+                JSON.stringify(
+                    {
+                        "name": namee.value
+                    }
+                )
+            );
+            addModal.hide();
+        }
+
+        function saveCategory(){
+            const request=new XMLHttpRequest();
+            request.open("PUT", '/categoryy', true);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.onreadystatechange= () => {
+                if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+                    loadCategory();
+
+                }
+            }
+            request.send(
+                JSON.stringify(
+                    {
+                        "id": sId.value,
+                        "name": sName.value
+                    }
+                )
+            );
+            modal.hide();
+        }
+
+
+
+
+        function deleteCategory(){
+            var conf=confirm("Are you sure?");
+            if (conf){
+                const request=new XMLHttpRequest();
+                request.open("DELETE", '/categoryy/'+sId.value, true);
+
+                request.onreadystatechange= () => {
+                    if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+                        loadCategory();
+                    }
+                }
+
+                request.send();
+            }
+            modal.hide();
+        }
+
+
+
+
+
+
+
+
+
+
+    </script>
+</div>
+</html>

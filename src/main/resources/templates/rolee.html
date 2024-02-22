@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="main_lay.html">
+
+
+<div layout:fragment="roles">
+  <div class="row">
+    <div class="col-12">
+      <div class="row" id="roleContent">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="editRoleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+
+                <input type="hidden" class="form-control" id="mId">
+
+
+          <div class="row">
+            <div class="col-12">
+              <div>
+                <label>Name:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <input type="text" class="form-control" id="mRole">
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="saveRole()" >Save</button>
+          <button type="button" class="btn btn-danger" onclick="deleteRole()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="row" >
+        <button class="btn btn-light" href="JavaScript:void(0)" onclick="openAddModal()">Add</button>
+      </div>
+    </div>
+  </div>
+
+
+
+      <div class="modal fade" id="addRoleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+           aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel1">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="courseId">
+      <div class="row">
+        <div class="col-12">
+          <div>
+            <label>Name:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div>
+            <input type="text" class="form-control" id="role">
+          </div>
+        </div>
+      </div>
+
+
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="addRoles()">ADD</button>
+            </div>
+
+          </div>
+        </div>
+    </div>
+
+
+
+
+
+
+  <script>
+
+    loadRoles();
+
+    var modal=new bootstrap.Modal(document.getElementById('editRoleModal'));
+    var addModal = new bootstrap.Modal(document.getElementById('addRoleModal'));
+
+
+    function loadRoles() {
+      const request = new XMLHttpRequest();
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText);
+        courseContentHTML="";
+
+        for (i = 0; i < result.length; i++) {
+          courseContentHTML+="<div class='col-3'>";
+          courseContentHTML+="<div class = 'card mt-3'>";
+          courseContentHTML+="<h5  class = 'card-header'></h5>";
+          courseContentHTML+="<div  class = 'card-body'>";
+          courseContentHTML+="<h5 class='card-title'>"+result[i].role+"</h5>";
+          courseContentHTML+="<a href='JavaScript:void(0)' class='btn btn-primary btn-sm' onclick='openEditModal("+result[i].id+")'>Details</a>";
+          courseContentHTML+=" </div>";
+          courseContentHTML+=" </div>";
+          courseContentHTML+=" </div>";
+        }
+        roleContent.innerHTML=courseContentHTML;
+      };
+      request.open("GET", "/role");
+      request.send();
+    }
+
+
+
+    function openEditModal(id){
+      const request = new XMLHttpRequest();
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText);
+        mId.value=result.id;
+        mRole.value=result.role;
+
+      };
+      request.open("GET", "/role/"+id);
+      request.send()
+      modal.show();
+    }
+
+    function openAddModal() {
+      addModal.show();
+    }
+
+    function addRoles(){
+      const request=new XMLHttpRequest();
+      request.open("POST", '/role', true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onreadystatechange= () => {
+        if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+          loadRoles();
+        }
+      }
+      request.send(
+              JSON.stringify(
+                      {
+                        "role": role.value
+                      }
+              )
+      );
+      addModal.hide();
+    }
+
+    function saveRole(){
+      const request=new XMLHttpRequest();
+      request.open("PUT", '/role', true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onreadystatechange= () => {
+        if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+          loadRoles();
+
+        }
+      }
+      request.send(
+              JSON.stringify(
+                      {
+                        "id": mId.value,
+                        "role": mRole.value
+                      }
+              )
+      );
+      modal.hide();
+    }
+
+
+
+
+    function deleteRole(){
+      var conf=confirm("Are you sure?");
+      if (conf){
+        const request=new XMLHttpRequest();
+        request.open("DELETE", '/role/'+mId.value, true);
+
+        request.onreadystatechange= () => {
+          if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+            loadRoles();
+          }
+        }
+
+        request.send();
+      }
+      modal.hide();
+    }
+
+
+
+
+
+
+
+
+
+
+  </script>
+</div>
+</html>

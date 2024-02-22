@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="main_lay.html">
+
+
+<div layout:fragment="ussers">
+  <div class="row">
+    <div class="col-12">
+      <div class="row" id="usserContent">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="editUsserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+
+                <input type="hidden" class="form-control" id="uId">
+
+
+          <div class="row">
+            <div class="col-12">
+              <div>
+                <label>Email:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <input type="email" class="form-control" id="uEmail">
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div>
+                <label>Full name:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <input type="text" class="form-control" id="uFullName">
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div>
+                <label>Password:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <input type="number" class="form-control" id="uPassword">
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div>
+                <label>Role:</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div>
+                <select id="editRoleCategory">
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="saveUsser()" >Save</button>
+          <button type="button" class="btn btn-danger" onclick="deleteUsser()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!--  <div class="row">-->
+<!--    <div class="col-12">-->
+<!--      <div class="row" id="course">-->
+<!--        <button class="btn btn-light" href="JavaScript:void(0)" onclick="openAddModal()">Add</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+
+<!--      <div class="modal fade" id="addCourseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"-->
+<!--           aria-labelledby="staticBackdropLabel1" aria-hidden="true">-->
+<!--        <div class="modal-dialog">-->
+<!--          <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--              <h1 class="modal-title fs-5" id="staticBackdropLabel1">Modal title</h1>-->
+<!--              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--              <input type="hidden" id="courseId">-->
+<!--      <div class="row">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <label>Name:</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row mt-2">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <input type="text" class="form-control" id="namee">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mt-3">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <label>Description:</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row mt-2">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <input type="text" class="form-control" id="description">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mt-3">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <label>Price:</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row mt-2">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <input type="number" class="form-control" id="price">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mt-3">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <label >Rating:</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row mt-2">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--              <input type="number" class="form-control" id="rating">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mt-3">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <label>Author:</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row mt-2">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <select id="courseAuthor">-->
+
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mt-3">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <label>Category:</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row mt-2">-->
+<!--        <div class="col-12">-->
+<!--          <div>-->
+<!--            <select id="courseCategory">-->
+
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--            </div>-->
+
+<!--            <div class="modal-footer">-->
+<!--              <button type="button" class="btn btn-primary" onclick="addCourses()">ADD</button>-->
+<!--            </div>-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+
+
+
+
+  <script>
+
+    loadUssers();
+    loadRoles();
+
+    var modal=new bootstrap.Modal(document.getElementById('editUsserModal'));
+    // var addModal = new bootstrap.Modal(document.getElementById('addCourseModal'));
+
+
+    function loadUssers() {
+      const request = new XMLHttpRequest();
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText);
+        usserContentHTML="";
+
+        for (i = 0; i < result.length; i++) {
+          usserContentHTML+="<div class='col-3'>";
+          usserContentHTML+="<div class = 'card mt-3'>";
+          usserContentHTML+="<h5  class = 'card-header'></h5>";
+          usserContentHTML+="<div  class = 'card-body'>";
+          usserContentHTML+="<h5 class='card-title'>"+result[i].email+"</h5>";
+          usserContentHTML+="<p class='card-text'>Profile: "
+                  + result[i].fullName + ", "
+                  +result[i].password  + "</p>";
+
+
+          usserContentHTML+=" </div>";
+          usserContentHTML+=" </div>";
+          usserContentHTML+=" </div>";
+        }
+        usserContent.innerHTML=usserContentHTML;
+      };
+      request.open("GET", "/authoor");
+      request.send();
+    }
+
+
+
+    function openEditModal(id){
+      const request = new XMLHttpRequest();
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText);
+        uId.value=result.id;
+        uEmail.value=result.email;
+        uFullName.value=result.fullName;
+        uPassword.value=result.password;
+        editRoleCategory.value=result.role;
+      };
+      request.open("GET", "/authoor/"+id);
+      request.send()
+      modal.show();
+    }
+
+
+
+    function saveUsser(){
+      const request=new XMLHttpRequest();
+      request.open("PUT", '/authoor', true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onreadystatechange= () => {
+        if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+          loadUssers();
+          loadRoles();
+        }
+      }
+      request.send(
+              JSON.stringify(
+                      {
+                        "id": uId.value,
+                        "email": uEmail.value,
+                        "fullName": uFullName.value,
+                        "password": uPassword.value,
+                        "role": {
+                          "id": editRoleCategory.value
+                        }
+                      }
+              )
+      );
+      modal.hide();
+    }
+
+
+
+
+    function deleteCourse(){
+      var conf=confirm("Are you sure?");
+      if (conf){
+        const request=new XMLHttpRequest();
+        request.open("DELETE", '/authoor/'+uId.value, true);
+
+        request.onreadystatechange= () => {
+          if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+            loadUssers();
+          }
+        }
+
+        request.send();
+      }
+      modal.hide();
+    }
+
+
+
+    function  loadRoles() {
+      const request = new XMLHttpRequest(); // <form>
+      request.onload = (e) => {
+        let result = JSON.parse(request.responseText); // converts JSON to ARRAY
+        editCourseAuthorHTML = "";
+        for (i = 0; i < result.length; i++) {
+          editCourseAuthorHTML += "<option value='" + result[i].id + "'>" +
+                  result[i].fullName +
+                  "</option>"
+        }
+        editRoleCategory.innerHTML = editCourseAuthorHTML;
+        // courseAuthor.innerHTML = editCourseAuthorHTML;
+      };
+      request.open("GET", "/role");
+      request.send();
+    }
+
+    function openAddModal() {
+      addModal.show();
+    }
+
+    function addCourses(){
+      const request=new XMLHttpRequest();
+      request.open("POST", '/course', true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onreadystatechange= () => {
+        if (request.readyState === XMLHttpRequest.DONE && request.status === 200){
+          loadCourses();
+        }
+      }
+      request.send(
+              JSON.stringify(
+                      {
+                        "coursesName": namee.value,
+                        "description": description.value,
+                        "price": price.value,
+                        "rating": rating.value,
+                        "author": {
+                          "id": courseAuthor.value
+                        },
+                        "category": {
+                          "id": courseCategory.value
+                        }
+                      }
+              )
+      );
+      addModal.hide();
+    }
+
+
+
+
+
+
+  </script>
+</div>
+</html>
